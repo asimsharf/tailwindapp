@@ -2,22 +2,59 @@
   <div class="table-responsive-scroll">
     <table
       datatable
-      [dtOptions]="dtOptions"
-      class="table table-hover table-md table-condensed"
+      [dtOptions]="dataTableOptions"
+      class="table table-hover table-md table-condensed display nowrap"
+      style="width: 100%"
     >
       <thead>
         <tr>
-          <th class="text-left">ID</th>
+          <th>ID</th>
           <th>Name</th>
           <th>Contact Number</th>
+          <th>Email</th>
+          <th>Address</th>
+          <th>City</th>
+          <th>State</th>
+          <th>Country</th>
+          <th>Postal Code</th>
+          <th>Website</th>
+          <th>Contact Person</th>
+          <th>Contact Person Number</th>
+          <th>Contact Person Email</th>
+          <th>Created At</th>
+          <th>Updated At</th>
+          <th>Status</th>
           <th class="text-end">Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let supplier of suppliers">
-          <td class="text-left">{{ supplier.id }}</td>
+          <td>{{ supplier.id }}</td>
           <td>{{ supplier.name }}</td>
           <td>{{ supplier.contactNumber }}</td>
+          <td>{{ supplier.email }}</td>
+          <td>{{ supplier.address }}</td>
+          <td>{{ supplier.city }}</td>
+          <td>{{ supplier.state }}</td>
+          <td>{{ supplier.country }}</td>
+          <td>{{ supplier.postalCode }}</td>
+          <td>{{ supplier.website }}</td>
+          <td>{{ supplier.contactPerson }}</td>
+          <td>{{ supplier.contactPersonNumber }}</td>
+          <td>{{ supplier.contactPersonEmail }}</td>
+          <td>{{ supplier.createdAt | date : "short" }}</td>
+          <td>{{ supplier.updatedAt | date : "short" }}</td>
+          <td>
+            <span
+              class="badge"
+              [ngClass]="{
+                'bg-success': supplier.status === 'Active',
+                'bg-danger': supplier.status === 'Inactive'
+              }"
+              >{{ supplier.status }}</span
+            >
+          </td>
+
           <td class="text-end">
             <button
               class="btn btn-primary btn-sm me-1"

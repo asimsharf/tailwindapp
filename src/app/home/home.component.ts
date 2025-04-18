@@ -13,23 +13,22 @@ import { Config } from 'datatables.net';
   styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit {
-  dtOptions: Config = {};
+  dataTableOptions: Config = {
+    autoWidth: true,
+    paging: true,
+    pagingType: 'full_numbers',
+    pageLength: 10,
+    processing: true,
+    searching: true,
+    order: [[0, 'asc']],
+    scrollX: true,
+  };
 
   suppliers: Supplier[] = [];
 
   constructor(private suppliersService: SuppliersService) {}
 
   ngOnInit(): void {
-    this.dtOptions = {
-      autoWidth: true,
-      paging: true,
-      pagingType: 'full_numbers',
-      pageLength: 10,
-      processing: true,
-      searching: true,
-      order: [[0, 'asc']],
-    };
-
     this.suppliersService.getSuppliersList().subscribe((data) => {
       this.suppliers = data;
     });
