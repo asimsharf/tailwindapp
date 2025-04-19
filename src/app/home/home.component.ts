@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { DataTablesModule } from 'angular-datatables';
-import { SuppliersService } from './suppliers.service';
-import { Supplier } from './supplier.model';
 import { Config } from 'datatables.net';
+import { Subject } from 'rxjs';
+import { AuthServiceImpl } from '../services/auth.service.impl';
+import { UsersResponse } from './models/users.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home',
@@ -12,35 +14,47 @@ import { Config } from 'datatables.net';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   dataTableOptions: Config = {
-    autoWidth: true,
     paging: true,
-    pagingType: 'full_numbers',
     pageLength: 10,
     processing: true,
-    searching: true,
-    order: [[0, 'asc']],
     scrollX: true,
+    pagingType: 'full_numbers',
+    order: [[0, 'asc']],
   };
+  loading: boolean = true;
+  usersResponse: UsersResponse[] = [];
 
-  suppliers: Supplier[] = [];
+  datatableTrigger: Subject<any> = new Subject();
 
-  constructor(private suppliersService: SuppliersService) {}
+  constructor(private auth: AuthServiceImpl,private toastr: ToastrService) {}
 
   ngOnInit(): void {
-    this.suppliersService.getSuppliersList().subscribe((data) => {
-      this.suppliers = data;
+    this.auth.getUsers().subscribe((res) => {
+      this.usersResponse = res.data;
+      this.datatableTrigger.next(this.usersResponse);
+      console.log('Users:', this.usersResponse);
+      this.loading = false;
     });
   }
 
-  editSupplier(id: number) {
-    // Implement edit functionality here
-    console.log('Edit supplier with ID:', id);
+  ngAfterViewInit(): void {
+    console.log('DataTable configured.');
   }
 
-  deleteSupplier(id: number) {
-    // Implement delete functionality here
-    console.log('Delete supplier with ID:', id);
+  ngOnDestroy(): void {
+    this.datatableTrigger.unsubscribe();
+    
+  }
+
+  editUser(id: number) {
+    console.log('Edit user:', id);
+    this.toastr.info('Edit user: ' + id, 'Info');
+  }
+
+  deleteUser(id: number) {
+    console.log('Delete user:', id);
+    this.toastr.warning('Delete user: ' + id, 'Warning');
   }
 }

@@ -1,71 +1,70 @@
+<!-- FULL PAGE LOADER -->
+<div *ngIf="loading" class="loader-overlay">
+  <div class="d-flex justify-content-center">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</div>
+
 <div class="container-fluid m-2">
-  <div class="table-responsive-scroll">
+  <div class="table-responsive">
     <table
       datatable
       [dtOptions]="dataTableOptions"
+      [dtTrigger]="datatableTrigger"
       class="table table-hover table-md table-condensed display nowrap"
       style="width: 100%"
     >
       <thead>
         <tr>
           <th>ID</th>
-          <th>Name</th>
-          <th>Contact Number</th>
+          <th>Full Name (Arabic)</th>
+          <th>Full Name (English)</th>
           <th>Email</th>
-          <th>Address</th>
-          <th>City</th>
-          <th>State</th>
-          <th>Country</th>
-          <th>Postal Code</th>
-          <th>Website</th>
-          <th>Contact Person</th>
-          <th>Contact Person Number</th>
-          <th>Contact Person Email</th>
+          <th>Phone</th>
+          <th>NIN</th>
+          <th>Role</th>
           <th>Created At</th>
-          <th>Updated At</th>
-          <th>Status</th>
+          <th>Sincera</th>
           <th class="text-end">Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let supplier of suppliers">
-          <td>{{ supplier.id }}</td>
-          <td>{{ supplier.name }}</td>
-          <td>{{ supplier.contactNumber }}</td>
-          <td>{{ supplier.email }}</td>
-          <td>{{ supplier.address }}</td>
-          <td>{{ supplier.city }}</td>
-          <td>{{ supplier.state }}</td>
-          <td>{{ supplier.country }}</td>
-          <td>{{ supplier.postalCode }}</td>
-          <td>{{ supplier.website }}</td>
-          <td>{{ supplier.contactPerson }}</td>
-          <td>{{ supplier.contactPersonNumber }}</td>
-          <td>{{ supplier.contactPersonEmail }}</td>
-          <td>{{ supplier.createdAt | date : "short" }}</td>
-          <td>{{ supplier.updatedAt | date : "short" }}</td>
+        <tr *ngFor="let user of usersResponse">
+          <td>{{ user.id }}</td>
+          <td>
+            {{ user.firstName.arabic }} {{ user.middleName.arabic }}
+            {{ user.fatherName.arabic }} {{ user.lastName.arabic }}
+          </td>
+          <td>
+            {{ user.firstName.english }} {{ user.middleName.english }}
+            {{ user.fatherName.english }} {{ user.lastName.english }}
+          </td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.phone }}</td>
+          <td>{{ user.nin }}</td>
+          <td>{{ user.role }}</td>
+          <td>{{ user.createdAt | date : "short" }}</td>
           <td>
             <span
               class="badge"
               [ngClass]="{
-                'bg-success': supplier.status === 'Active',
-                'bg-danger': supplier.status === 'Inactive'
+                'bg-success': user.sincera === true,
+                'bg-secondary': user.sincera === false
               }"
-              >{{ supplier.status }}</span
             >
+              {{ user.sincera ? "Yes" : "No" }}
+            </span>
           </td>
-
           <td class="text-end">
             <button
               class="btn btn-primary btn-sm me-1"
-              (click)="editSupplier(supplier.id)"
+              (click)="editUser(user.id)"
             >
               <i class="bi bi-pencil"></i>
             </button>
-            <button
-              class="btn btn-danger btn-sm"
-              (click)="deleteSupplier(supplier.id)"
-            >
+            <button class="btn btn-danger btn-sm" (click)="deleteUser(user.id)">
               <i class="bi bi-trash"></i>
             </button>
           </td>
