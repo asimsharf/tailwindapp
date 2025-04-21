@@ -2,15 +2,17 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { LoginResponse } from '../../login/models/login-response.model';
 import { AuthServiceImpl } from '../../services/auth.service.impl';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @Component({
   selector: 'app-main-layout',
   standalone: true,
-  imports: [RouterOutlet, RouterLink],
+  imports: [ RouterOutlet, SidebarComponent, ToolbarComponent],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.css',
 })
-export class MainLayoutComponent implements OnInit , AfterViewInit {
+export class MainLayoutComponent implements OnInit, AfterViewInit {
   userInfo: LoginResponse | null = null;
   isLoggedIn: boolean = false;
   userName: string | null = null;

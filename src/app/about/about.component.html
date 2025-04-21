@@ -1,1 +1,51 @@
-<h1>Welcom to About Page</h1>
+<div class="overflow-x-auto">
+    <div class="min-w-full inline-block align-middle">
+      <div class="overflow-y-auto">
+        <table class="min-w-full divide-y divide-gray-200 text-sm text-gray-700 bg-white shadow rounded-lg">
+          <thead class="bg-gray-100 sticky top-0 z-10">
+            <tr>
+                <th class="px-4 py-2 text-left font-semibold">Name</th>
+                <th class="px-4 py-2 text-left font-semibold">Email</th>
+                <th class="px-4 py-2 text-left font-semibold">Role</th>
+                <th class="px-4 py-2 text-left font-semibold">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200">
+            <tr *ngFor="let user of paginatedData">
+              <td class="px-4 py-2">{{ user.name }}</td>
+              <td class="px-4 py-2">{{ user.email }}</td>
+              <td class="px-4 py-2 capitalize">{{ user.role }}</td>
+              <td class="px-4 py-2 space-x-2">
+                <button class="text-indigo-600 hover:underline">Edit</button>
+                <button class="text-red-600 hover:underline">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Pagination Controls -->
+  <div class="flex justify-between items-center mt-4 text-sm text-gray-600">
+    <div>
+      Page {{ page }} of {{ totalPages }}
+    </div>
+    <div class="space-x-2">
+      <button
+        (click)="setPage(page - 1)"
+        [disabled]="page === 1"
+        class="px-3 py-1 rounded border text-sm disabled:opacity-50"
+      >
+        Previous
+      </button>
+      <button
+        (click)="setPage(page + 1)"
+        [disabled]="page === totalPages"
+        class="px-3 py-1 rounded border text-sm disabled:opacity-50"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+  

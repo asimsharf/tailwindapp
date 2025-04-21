@@ -52,7 +52,7 @@ export class AuthServiceImpl implements AuthService {
     return TokenUtil.getUserFullNameEnglish();
   }
 
-  getUsers(): Observable<ApiResponse<UsersResponse[]>> {
-    return this.repo.users();
+  getAllUsers(): Observable<ApiResponse<UsersResponse[]>> {
+    return this.repo.getAllUsers();
   }
 }

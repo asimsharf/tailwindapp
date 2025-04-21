@@ -23,7 +23,7 @@ export class AuthRepository {
     );
   }
 
-  users(): Observable<ApiResponse<UsersResponse[]>> {
+  getAllUsers(): Observable<ApiResponse<UsersResponse[]>> {
     return this.http.get<ApiResponse<UsersResponse[]>>(`${this.baseUrl}users?page=0&size=1000`);
   }
 }
